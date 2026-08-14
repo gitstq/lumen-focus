@@ -1,0 +1,17 @@
+{
+  "name": "Lumen Focus · 光域专注",
+  "short_name": "Lumen Focus",
+  "description": "一款零依赖、可离线运行的沉浸式专注计时器，内置 Web Audio 生成式环境音与专注数据分析。",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#0b0e14",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

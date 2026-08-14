@@ -1,0 +1,27 @@
+{
+  "name": "lumen-focus",
+  "version": "1.0.0",
+  "description": "Lumen Focus - 光域专注 · 一款零依赖、可离线运行的沉浸式专注计时器，内置 Web Audio 生成式环境音与专注数据分析。",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "node build.js && node tools/serve.js",
+    "start": "node tools/serve.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "pomodoro",
+    "focus-timer",
+    "ambient-sound",
+    "web-audio",
+    "deep-work",
+    "offline",
+    "productivity",
+    "pwa"
+  ],
+  "author": "gitstq",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

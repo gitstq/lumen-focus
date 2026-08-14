@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Lumen Focus · 光域专注 — 一款零依赖、可离线运行的沉浸式专注计时器，内置 Web Audio 生成式环境音与专注数据分析。" />
+  <meta name="theme-color" content="#0b0e14" />
+  <title>Lumen Focus · 光域专注</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/logo.svg" />
+  <link rel="stylesheet" href="src/css/style.css" />
+</head>
+<body>
+  <div class="ambient" id="ambient" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand__logo" src="assets/logo.svg" alt="Lumen Focus logo" width="28" height="28" />
+      <span class="brand__name">Lumen&nbsp;Focus</span>
+      <span class="brand__tag">光域专注</span>
+    </div>
+    <nav class="mode-nav" id="modeNav" aria-label="专注模式">
+      <button class="mode-btn is-active" data-mode="deep" aria-pressed="true">深度专注</button>
+      <button class="mode-btn" data-mode="short" aria-pressed="false">短休息</button>
+      <button class="mode-btn" data-mode="long" aria-pressed="false">长休息</button>
+    </nav>
+    <div class="topbar__actions">
+      <button class="icon-btn" id="soundToggle" aria-label="环境音开关" title="环境音">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      </button>
+      <button class="icon-btn" id="themeToggle" aria-label="深浅主题切换" title="主题">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn" id="statsToggle" aria-label="专注数据" title="专注数据">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="timer-column">
+      <div class="timer" id="timer" role="timer" aria-live="off">
+        <div class="timer__ring" id="timerRing">
+          <span class="timer__time" id="timeDisplay">25:00</span>
+        </div>
+        <div class="timer__meta" id="timerMeta">深度专注 · 第 1 轮</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn--primary" id="startBtn">
+          <svg id="startIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span id="startLabel">开始</span>
+        </button>
+        <button class="btn" id="resetBtn" aria-label="重置">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+        <button class="btn" id="skipBtn" aria-label="跳到下一段">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 5l11 7-11 7z"/></svg>
+        </button>
+      </div>
+
+      <div class="sound-picker" id="soundPicker">
+        <span class="sound-picker__label">环境音</span>
+        <div class="sound-picker__options" id="soundOptions">
+          <button class="chip is-active" data-sound="silence">静音</button>
+          <button class="chip" data-sound="deep">深度</button>
+          <button class="chip" data-sound="rain">雨声</button>
+          <button class="chip" data-sound="cafe">咖啡馆</button>
+          <button class="chip" data-sound="ocean">海浪</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="stats-panel" id="statsPanel" hidden>
+      <div class="stats-panel__head">
+        <h2 class="stats-panel__title">专注数据</h2>
+        <button class="icon-btn" id="statsClose" aria-label="关闭">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <span class="stat__value" id="statToday">0<span class="stat__unit">分</span></span>
+          <span class="stat__label">今日专注</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value" id="statWeek">0<span class="stat__unit">分</span></span>
+          <span class="stat__label">本周专注</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value" id="statStreak">0<span class="stat__unit">天</span></span>
+          <span class="stat__label">连续天数</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value" id="statSessions">0<span class="stat__unit">轮</span></span>
+          <span class="stat__label">完成轮次</span>
+        </div>
+      </div>
+      <div class="week-chart" id="weekChart" aria-label="近 7 天专注分布"></div>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <span>Lumen Focus · 零依赖 · 可离线</span>
+    <span class="foot__dot">·</span>
+    <span>按 <kbd>Space</kbd> 开始 / 暂停</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>
