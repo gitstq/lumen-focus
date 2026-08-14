@@ -9,6 +9,7 @@
 [简体中文](README.md) · [繁體中文](README.zh-TW.md) · [English](README.en.md)
 
 ![version](https://img.shields.io/badge/version-v1.0.0-7c9bff) ![license](https://img.shields.io/badge/license-MIT-6ee7a0) ![deps](https://img.shields.io/badge/dependencies-0-green) ![offline](https://img.shields.io/badge/offline-ready-blue)
+[![release](https://img.shields.io/badge/download-Releases-ff6b6b)](https://github.com/gitstq/lumen-focus/releases)
 
 </div>
 
